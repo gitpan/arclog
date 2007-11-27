@@ -1,0 +1,24 @@
+---
+name: arclog
+version: 3.00
+author:
+  - 'imacat <imacat@mail.imacat.idv.tw>'
+abstract: Archive log files monthly
+license: gpl
+resources:
+  license: http://www.opensource.org/licenses/gpl-license.php
+requires:
+  Date::Parse: 0
+  perl: 5.8.0
+build_requires:
+  Module::Signature: 0
+  Test::Pod: 0
+recommends:
+  Compress::Bzip2: 2
+  Compress::Zlib: 0
+  File::MMagic: 0
+  Term::ReadKey: 0
+generated_by: Module::Build version 0.2808
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2
