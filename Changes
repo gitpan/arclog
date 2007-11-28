@@ -1,5 +1,16 @@
 arclog change log
 
+2007-11-28	version 3.01
+	Test suite improvement.
+	 1. arclog, TODO.*: Clean up to-do list.
+	 2. Makefile.PL: Use "use 5.008" instead of "use 5.8.0" for
+	    compatibility with older Perl.
+	 3. t/01-exhaust.t: Added $vardump to error output, to catch
+	    CPAN testers test failurs.
+	 4. Return to build distribution with ExtUtils::MakeMaker,
+	    since Module::Build did not preserve the original file
+	    date.
+
 2007-11-28	version 3.00
 	 1. t/01-exhaust.t: Fixed so that a zero-sized result file
 	    is valid as application/x-bzip2.  This is to fix the
@@ -9,7 +20,7 @@ arclog change log
 2007-11-27
 	 1. Makefile.PL, Build.PL: Clean-up old file found message.
 	 2. Makefile.PL: Added message for optional prerequisites.
-	 3. reslog.zh-tw.html, reslog.zh-cn.html: Tag the languages.
+	 3. arclog.zh-tw.html, arclog.zh-cn.html: Tag the languages.
 	 4. t/02-several.t: Added the missing "several source files
 	    all listed as arguments" tests.
 	 5. t/01-exhaust.t: Moved @OVERTYPES to t/_helper.t.
@@ -27,7 +38,7 @@ arclog change log
 	 7. fdl.txt: Added.
 	 8. MSWin32 and MS-Win32 is now written as MS-Windows in the
 	    documentation.
-	 9. arclog: Re-order the debug message in the check_gzip() and
+	 9. arclog: Reorder the debug message in the check_gzip() and
 	    check_bzip2() methods of the _private::IO class.
 	10. Makefile.PL, Build.PL: Fixed comment typo. ("any old files")
 	11. Build.PL: Added "recommends" and "build_requires".
@@ -59,7 +70,7 @@ arclog change log
 	    as "archive".
 	 9. t/01-exhaust.t: Moved @SRCTYPES to t/_helper.pm so that it can
 	    be shared among tests.
-	10. reslog: Fixed to return ref($GZIP_IO)->new instead of $GZIP_IO
+	10. arclog: Fixed to return ref($GZIP_IO)->new instead of $GZIP_IO
 	    in the check_gzip() method, ref($BZIP2_IO)->new instead of
 	    $BZIP2_IO in the check_bzip2() method of the _private::IO class,
 	    so that a same I/O handler will not be returned to different log
@@ -371,16 +382,16 @@ arclog change log
 
 2002-08-31	version 2.1.0dev1
 	Rewrite after almost 1 year, to be run on the
-	newly-released perl 5.8.0.
+	newly-released Perl 5.8.0.
 	 1. Filehandles are now saved and passed in global
 	    named variables.  This is the way it should be.
 	    The old way (initialize the file handles by
 	    duplicate the STDIN and assign them) was just
-	    not natural.  It works in perl 5.6.1, but not in
+	    not natural.  It works in Perl 5.6.1, but not in
 	    perl 5.8.0.  The duplicated filehandles are
 	    constants, which cannot be assigned new values.
 	 2. Indents are changed from 1 tab to 4 columns, to
-	    accommodate the perl style guide documented in
+	    accommodate the Perl style guide documented in
 	    perlstyle(1).  This increases the code
 	    readability.
 	 3. File operation error handlers are now using the

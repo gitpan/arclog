@@ -124,13 +124,13 @@ foreach my $fmt (@LOGFMTS) {
                         }
                         die "$title\n$cmd\n$out$err"
                             unless $$ot{"ok"}? $retno == 0: $retno != 0;
-                        die "$title\n$cmd\nresult files incorrect.\nGot: $flr\nExpected: $fle\nOutput:\n$out$err"
+                        die "$title\n$cmd\nresult files incorrect.\nGot: $flr\nExpected: $fle\nVariables: $vardump\nOutput:\n$out$err"
                             unless $flr eq $fle;
                         foreach $fr (@fle) {
-                            die "$title\n$cmd\n$fr: result type incorrect.\nGot: $trf{$fr}\nExpected: $tef{$fr}\nOutput:\n$out$err"
+                            die "$title\n$cmd\n$fr: result type incorrect.\nGot: $trf{$fr}\nExpected: $tef{$fr}\nVariables: $vardump\nOutput:\n$out$err"
                                 unless nofile || $trf{$fr} eq $tef{$fr}
                                     || ($tef{$fr} eq TYPE_BZIP2 && -z catfile($WORKDIR, $fr));
-                            die "$title\n$cmd\n$fr: result incorrect.\nGot:\n$crf{$fr}\nExpected:\n$cef{$fr}\nOutput:\n$out$err"
+                            die "$title\n$cmd\n$fr: result incorrect.\nGot:\n$crf{$fr}\nExpected:\n$cef{$fr}\nVariables: $vardump\nOutput:\n$out$err"
                                 unless $crf{$fr} eq $cef{$fr};
                         }
                         1;

@@ -1,3 +1,2 @@
- 1. Support for reading compressed log files from STDIN.
- 2. Multi-lingual support, with Traditional and Simplified Chinese
+ 1. Multi-lingual support, with Traditional and Simplified Chinese
     messages.

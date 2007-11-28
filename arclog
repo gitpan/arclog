@@ -56,7 +56,7 @@ sub show_progress($$$);
 our ($THIS_FILE, $VERBOSE);
 use vars qw($VERSION);
 $THIS_FILE = basename($0);
-$VERSION = "3.00";
+$VERSION = "3.01";
 $VERBOSE = 1;
 
 our (%CONF, @LOGFILES, $THIS_MONTH, $START, $LASTLINE);
@@ -2834,20 +2834,10 @@ Thank you.
 
 =over
 
-=item Reading compressed log files from C<STDIN>
-
-This is possible, but not implemented yet.
-
 =item Multi-lingual support
 
 Support multi-lingual, either with L<Text::Iconv(3)|Text::Iconv/3> or
 perl 5.8.0's L<Encode(3)|Encode/3>.
-
-=item Set the sort size limit dynamically
-
-Set the sort size limit according to the actual system memory.  This
-can be possible only if I can obtain the total amount of the actual
-system memory. :p
 
 =back
 
