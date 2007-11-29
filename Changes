@@ -1,5 +1,17 @@
 arclog change log
 
+2007-11-30	version 3.02
+	 1. _helper: Use time2str() from Date::Format to generate
+	    the time text instead of doing this my self.  The way
+	    I generate the time text cannot deal with daylight
+	    saving time.  It should be safe to use Date::Format,
+	    since Date::Format is in the same TimeDate distribution
+	    as Date::Parse, at least till now.
+
+2007-11-29
+	 1. arclog.zh-tw.html, TODO.zh-tw, TODO.zh-cn: Changed
+	    '繁體中文' to '正體中文'.
+
 2007-11-28	version 3.01
 	Test suite improvement.
 	 1. arclog, TODO.*: Clean up to-do list.

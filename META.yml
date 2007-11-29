@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                arclog
-version:             3.01
+version:             3.02
 abstract:            Archive log files monthly
 license:             gpl
 generated_by:        ExtUtils::MakeMaker version 6.36

@@ -56,7 +56,7 @@ sub show_progress($$$);
 our ($THIS_FILE, $VERBOSE);
 use vars qw($VERSION);
 $THIS_FILE = basename($0);
-$VERSION = "3.01";
+$VERSION = "3.02";
 $VERBOSE = 1;
 
 our (%CONF, @LOGFILES, $THIS_MONTH, $START, $LASTLINE);

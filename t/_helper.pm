@@ -62,6 +62,7 @@ sub randip();
 sub randdomain();
 
 use Data::Dumper;
+use Date::Format qw(time2str);
 use ExtUtils::MakeMaker qw();
 use Fcntl qw(:seek);
 use File::Basename qw(basename);
@@ -552,15 +553,14 @@ sub mkrndlog_existing($$$@) {
 # mkrndlog_apache: Create a random Apache access log file
 sub mkrndlog_apache($;$) {
     local ($_, %_);
-    my ($file, $month, @logs, $content, @monrng, %months, $vardump);
-    my ($tz, $tzoff);
+    my ($file, $month, @logs, $content, @monrng, %months, $vardump, $tz);
     ($file, $month) = @_;
     
     @logs = qw();
     
     # Time zone
-    $tz = (-11 + (int rand 48) / 2) * 3600;
-    $tzoff = $tz - (timelocal(localtime) - timelocal(gmtime));
+    $tz = -12 + (int rand 53) / 2;
+    $tz = sprintf "%+05d", int($tz) * 100 + ($tz - int($tz)) * 60;
     
     # Get the range of a month
     if (defined $month) {
@@ -587,12 +587,7 @@ sub mkrndlog_apache($;$) {
             while (@hlogs < $hlogs) {
                 my ($ttxt, $method, $url, $dirs, @dirs, $type, $status, $size);
                 # Time text
-                @_ = localtime($t + $tzoff);
-                $_[5] += 1900;
-                $_[4] = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec))[$_[4]];
-                $ttxt = sprintf "%02d/%s/%04d:%02d:%02d:%02d %+05d",
-                    @_[3,4,5,2,1,0],
-                    int($tz / 3600) * 100 + ($tz - int($tz / 3600) * 3600) / 60;
+                $ttxt = time2str("%d/%h/%Y:%T %Z", $t, $tz);
                 
                 $method = (qw(GET GET GET HEAD POST))[int rand 5];
                 
@@ -636,8 +631,7 @@ sub mkrndlog_apache($;$) {
     @logs = sort { $$a{"time"} <=> $$b{"time"} } @logs;
     
     # Variables used, for failure investigation
-    $vardump = Data::Dumper->Dump([\@logs, $tz, $tzoff],
-        [qw($logs $tz $tzoff)]);
+    $vardump = Data::Dumper->Dump([\@logs, $tz], [qw($logs $tz)]);
     
     # Split by months
     %months = split_months @logs;
@@ -687,11 +681,7 @@ sub mkrndlog_syslog($;$) {
         foreach my $t (sort @t) {
             my ($ttxt, $host, $app, $pid, $msg);
             # Time text
-            @_ = localtime $t;
-            $_[5] += 1900;
-            $_[4] = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec))[$_[4]];
-            $ttxt = sprintf "%s %2d %02d:%02d:%02d", @_[4,3,2,1,0];
-            
+            $ttxt = time2str("%h %d %T", $t);
             $host = $hosts[int rand scalar @hosts];
             $app = (qw(kernel sendmail sshd su CRON), randword, randword)[int rand 5];
             # PID 2-65535 (PID 1 is init)
@@ -767,11 +757,7 @@ sub mkrndlog_ntp($;$) {
         foreach my $t (sort @t) {
             my ($ttxt, $type, $msg);
             # Time text
-            @_ = localtime $t;
-            $_[5] += 1900;
-            $_[4] = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec))[$_[4]];
-            $ttxt = sprintf "%2d %s %02d:%02d:%02d", @_[3,4,2,1,0];
-            
+            $ttxt = time2str("%e %h %T", $t);
             # PID change - chance 2.73%, 50% change to total 25 records
             $pid = 2 + int rand 65533
                 if rand() < 0.0273;
@@ -865,11 +851,7 @@ sub mkrndlog_apachessl($;$) {
         foreach my $t (sort @t) {
             my ($ttxt, $pid, $remote, $priority, $child, $msg);
             # Time text
-            @_ = localtime $t;
-            $_[5] += 1900;
-            $_[4] = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec))[$_[4]];
-            $ttxt = sprintf "%02d/%s/%04d %02d:%02d:%02d", @_[3,4,5,2,1,0];
-            
+            $ttxt = time2str("%d/%h/%Y %T", $t);
             # PID 2-65535 (PID 1 is init)
             $pid = 2 + int rand 65533;
             # Remote client
@@ -966,15 +948,14 @@ sub mkrndlog_apachessl($;$) {
 # mkrndlog_modfiso: Create a random modified ISO 8861 date/time log file
 sub mkrndlog_modfiso($;$) {
     local ($_, %_);
-    my ($file, $month, @logs, $content, @monrng, %months, $vardump);
-    my ($tz, $tzoff);
+    my ($file, $month, @logs, $content, @monrng, %months, $vardump, $tz);
     ($file, $month) = @_;
     
     @logs = qw();
     
     # Time zone
-    $tz = (-11 + (int rand 48) / 2) * 3600;
-    $tzoff = $tz - (timelocal(localtime) - timelocal(gmtime));
+    $tz = -12 + (int rand 53) / 2;
+    $tz = sprintf "%+05d", int($tz) * 100 + ($tz - int($tz)) * 60;
     
     # Get the range of a month
     if (defined $month) {
@@ -995,12 +976,7 @@ sub mkrndlog_modfiso($;$) {
         foreach my $t (sort @t) {
             my ($ttxt, $id, $msg);
             # Time text
-            @_ = localtime($t + $tzoff);
-            $_[5] += 1900;
-            $_[4]++;
-            $ttxt = sprintf "%04d-%02d-%02d %02d:%02d:%02d %+05d",
-                @_[5,4,3,2,1,0], 
-                int($tz / 3600) * 100 + ($tz - int($tz / 3600) * 3600) / 60;
+            $ttxt = time2str("%Y-%m-%d %T %Z", $t, $tz);
             # identity
             $id = randword;
             # 3-12 words for each message
@@ -1018,8 +994,7 @@ sub mkrndlog_modfiso($;$) {
     }
     
     # Variables used, for failure investigation
-    $vardump = Data::Dumper->Dump([\@logs, $tz, $tzoff],
-        [qw($logs $tz $tzoff)]);
+    $vardump = Data::Dumper->Dump([\@logs, $tz], [qw($logs $tz)]);
     
     # Split by months
     %months = split_months @logs;
