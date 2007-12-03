@@ -25,7 +25,7 @@ h2, em {
     width: 0.5em;
 }
 </style>
-<title>arclog Version 3.03</title>
+<title>arclog Version 3.04</title>
 </head>
 <body>
 
@@ -45,12 +45,19 @@ h2, em {
 <div class="accessguide"><a accesskey="C"
     href="#body" title="Page Content Area">:::</a></div>
 
-<h1><samp>arclog</samp> Version 3.03</h1>
+<h1><samp>arclog</samp> Version 3.04</h1>
 
 
 <h2>What&rsquo;s New?</h2>
 
 <dl>
+
+<dt>2007-12-03</dt>
+
+<dd>
+<p><samp>arclog</samp> version 3.04 is released.  Documentation fixes.  Upgrade is not necessary if you have installed <samp>arclog</samp> version 3.00 or later.  <a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.04.tar.gz" type="application/x-gzip">Download <samp>arclog</samp> version 3.04</a>.</p>
+</dd>
+
 
 <dt>2007-12-03</dt>
 
@@ -105,9 +112,9 @@ h2, em {
 
 <h2>Description</h2>
 
-<p><samp>arclog</samp> archives the log files monthly.  It strips off previous months&rsquo; log records from the log file, and save them to compressed archive files named <samp>logfile.yyyymm</samp>.  It then saves the hard disk space and prevents potential attacks on log files.</p>
+<p><dfn><samp>arclog</samp></dfn> archives the log files monthly.  It strips off previous months&rsquo; log records from the log file, and save them to compressed archive files named <samp>logfile.yyyymm</samp>.  It then saves the hard disk space and prevents potential attacks on log files.</p>
 
-<p>Currently, <samp>arclog</samp> supports <a href="http://httpd.apache.org/">Apache</a> access log, Syslog, <a href="http://www.ntp.org/"><abbr title="network time protocol">NTP</abbr></a>, Apache 1 <abbr title="secure socket layer">SSL</abbr> engine log and my own bracketed, modified <acronym title="International Organization for Standardization">ISO</acronym> date/time log file formats, and <samp>gzip</samp> and <samp>bzip2</samp> compression methods.</p>
+<p>Currently, <samp>arclog</samp> supports <a href="http://httpd.apache.org/">Apache</a> access log, Syslog, <a href="http://www.ntp.org/"><abbr title="network time protocol">NTP</abbr></a>, Apache 1 <abbr title="secure socket layer">SSL</abbr> engine log and my own bracketed, modified <acronym title="International Organization for Standardization">ISO</acronym> date/time log file formats, and <samp>gzip</samp> and <samp>bzip2</samp> compression methods.  Several software projects log (or can log) in a format compatible with the Apache access log, like <a href="http://www.cups.org/"><abbr title="Common UNIX Printing System">CUPS</abbr></a>, <a href="http://www.proftpd.org/">ProFTPD</a>, <a href="http://www.pureftpd.org/">Pure-FTPd</a>&hellip; <abbr title="et cetera">etc.</abbr>, and <samp>arclog</samp> can archive their Apache-like log files, too.</p>
 
 
 <h2>Caution</h2>

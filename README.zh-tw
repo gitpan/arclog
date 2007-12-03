@@ -16,7 +16,9 @@ arclog - 記錄檔每月歸檔程式
 間，並避免記錄檔被有心人士破壞。
 
 　　arclog 目前支援 Apache 、 Syslog 、 NTP 、 Apache 1 SSL engine log 及我自
-己用的括弧 ISO 修正格式五種格式的記錄檔，與 gzip 和 bzip2 兩種壓縮法。
+己用的括弧 ISO 修正格式五種格式的記錄檔，與 gzip 和 bzip2 兩種壓縮法。很多程
+式都可以用 Apache 相容記錄檔格式記錄，如 CUPS 、 ProFTPD 、 Pure-FTPd…等，
+arclog 也可以歸檔這些 Apache 相容格式的記錄檔。
 
 ◎說明文件
 
@@ -51,6 +53,6 @@ https://lists.sourceforge.net/lists/listinfo/arclog-users 加入我們的郵件通訊
 
 
 依瑪貓 imacat ^_*'
-2007-11-26
+2007-12-03
 imacat@mail.imacat.idv.tw
 http://www.imacat.idv.tw/

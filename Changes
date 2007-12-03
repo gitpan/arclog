@@ -1,5 +1,13 @@
 arclog change log
 
+2007-12-03	version 3.04
+	Documentation fix.
+	 1. arclog, arclog.*.html, README*: Added the information on
+	    the usability of arclog with log files from many
+	    softwares that log with an Apache-like log format.
+	 2. arclog.zh-cn.html: Fixed the version number.
+	 3. arclog.*.html: Added <dfn>...</dfn> to the description.
+
 2007-12-03	version 3.03
 	 1. t/*.t: Fixed so that send frread($fs) instead of $cs
 	    is sent to arclog STDIN when reading from STDIN, so that

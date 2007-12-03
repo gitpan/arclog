@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                arclog
-version:             3.03
+version:             3.04
 abstract:            Archive log files monthly
 license:             gpl
 author:              

@@ -15,8 +15,10 @@ arclog - 记录档每月归档程式
     arclog 是每月归档程式，将记录档中，前月的记录按月份压缩归档，以节省硬碟空
 间，并避免记录档被有心人士破坏。
 
-　　arclog 目前支援 Apache, Syslog, NTP, Apache 1 SSL engine log 及我自己用的
-括弧 ISO 修正格式五种格式的记录档，与 gzip 和 bzip2 两种压缩法。
+　　arclog 目前支援 Apache 、 Syslog 、 NTP 、 Apache 1 SSL engine log 及我自
+己用的括弧 ISO 修正格式五种格式的记录档，与 gzip 和 bzip2 两种压缩法。很多程
+式都可以用 Apache 相容记录档格式记录，如 CUPS 、 ProFTPD 、 Pure-FTPd…等，
+arclog 也可以归档这些 Apache 相容格式的记录档。
 
 ◎说明文件
 
@@ -51,6 +53,6 @@ https://lists.sourceforge.net/lists/listinfo/arclog-users 加入我们的邮件通讯
 
 
 依玛猫 imacat ^_*'
-2007-11-26
+2007-12-03
 imacat@mail.imacat.idv.tw
 http://www.imacat.idv.tw/

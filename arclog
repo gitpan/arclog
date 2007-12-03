@@ -56,7 +56,7 @@ sub show_progress($$$);
 our ($THIS_FILE, $VERBOSE);
 use vars qw($VERSION);
 $THIS_FILE = basename($0);
-$VERSION = "3.03";
+$VERSION = "3.04";
 $VERBOSE = 1;
 
 our (%CONF, @LOGFILES, $THIS_MONTH, $START, $LASTLINE);
@@ -2558,7 +2558,10 @@ to archived files named logfile.yyyymm.gz.
 
 Currently, F<arclog> supports Apache access log, Syslog, NTP, Apache
 1 SSL engine log and my own bracketed, modified ISO date/time log
-file formats, and gzip and bzip2 compression methods.
+file formats, and gzip and bzip2 compression methods.  Several
+software projects log (or can log) in a format compatible with the
+Apache access log, like CUPS, ProFTPD, Pure-FTPd... etc., and
+F<arclog> can archive their Apache-like log files, too.
 
 Notice: I<Archiving takes time>.  To reduce the time occupying the
 source log file, F<arclog> copies the content of the source log

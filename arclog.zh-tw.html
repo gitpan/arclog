@@ -31,7 +31,7 @@ q:lang(en) {
     quotes: "\201C" "\201D" "\2018" "\2019";
 }
 </style>
-<title>arclog 3.03 版</title>
+<title>arclog 3.04 版</title>
 </head>
 <body>
 
@@ -51,12 +51,19 @@ q:lang(en) {
 <div class="accessguide"><a accesskey="C"
     href="#body" title="網頁內文區">:::</a></div>
 
-<h1><samp xml:lang="en">arclog</samp> 3.03 版</h1>
+<h1><samp xml:lang="en">arclog</samp> 3.04 版</h1>
 
 
 <h2>最新消息</h2>
 
 <dl>
+
+<dt>2007-12-03</dt>
+
+<dd>
+<p><samp xml:lang="en">arclog</samp> 最新版本 3.04 。說明文件修正。若妳之前安裝了 <samp xml:lang="en">arclog</samp> 3.00 版或之後的版本，不需要安裝新版。<a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.04.tar.gz" type="application/x-gzip">下載 <samp xml:lang="en">arclog</samp> 3.04 版</a>。</p>
+</dd>
+
 
 <dt>2007-12-03</dt>
 
@@ -112,9 +119,9 @@ q:lang(en) {
 
 <h2>說明</h2>
 
-<p><samp xml:lang="en">arclog</samp> 是記錄檔每月歸檔程式，將記錄檔中，前月的記錄按月份壓縮歸檔，以節省硬碟空間，並避免記錄檔被有心人士破壞。</p>
+<p><dfn xml:lang="en"><samp>arclog</samp></dfn> 是記錄檔每月歸檔程式，將記錄檔中，前月的記錄按月份壓縮歸檔，以節省硬碟空間，並避免記錄檔被有心人士破壞。</p>
 
-<p><samp xml:lang="en">arclog</samp> 目前支援 <a href="http://httpd.apache.org/" hreflang="en" xml:lang="en">Apache</a> 、 <span xml:lang="en">Syslog</span> 、 <a href="http://www.ntp.org/" hreflang="en" xml:lang="en"><abbr title="network time protocol">NTP</abbr></a> 、 <span xml:lang="en">Apache 1 <abbr title="secure socket layer">SSL</abbr> engine log</span> 及我自己用的括弧 <acronym title="International Organization for Standardization" xml:lang="en">ISO</acronym> 修正格式五種格式的記錄檔，與 <samp xml:lang="en">gzip</samp> 和 <samp xml:lang="en">bzip2</samp> 兩種壓縮法。</p>
+<p><samp xml:lang="en">arclog</samp> 目前支援 <a href="http://httpd.apache.org/" hreflang="en" xml:lang="en">Apache</a> 、 <span xml:lang="en">Syslog</span> 、 <a href="http://www.ntp.org/" hreflang="en" xml:lang="en"><abbr title="network time protocol">NTP</abbr></a> 、 <span xml:lang="en">Apache 1 <abbr title="secure socket layer">SSL</abbr> engine log</span> 及我自己用的括弧 <acronym title="International Organization for Standardization" xml:lang="en">ISO</acronym> 修正格式五種格式的記錄檔，與 <samp xml:lang="en">gzip</samp> 和 <samp xml:lang="en">bzip2</samp> 兩種壓縮法。很多程式都可以用 <span xml:lang="en">Apache</span> 相容記錄檔格式記錄，如 <a href="http://www.cups.org/" hreflang="en" xml:lang="en"><abbr title="Common UNIX Printing System">CUPS</abbr></a> 、 <a href="http://www.proftpd.org/" hreflang="en" xml:lang="en">ProFTPD</a> 、 <a href="http://www.pureftpd.org/" hreflang="en" xml:lang="en">Pure-FTPd</a>&hellip;等， <samp xml:lang="en">arclog</samp> 也可以歸檔這些 <span xml:lang="en">Apache</span> 相容格式的記錄檔。</p>
 
 
 <h2>注意事項</h2>
