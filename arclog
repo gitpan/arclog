@@ -19,7 +19,7 @@
 # First written: 2001-01-05
 
 package main;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use ExtUtils::MakeMaker qw();
@@ -56,7 +56,7 @@ sub show_progress($$$);
 our ($THIS_FILE, $VERBOSE);
 use vars qw($VERSION);
 $THIS_FILE = basename($0);
-$VERSION = "3.02";
+$VERSION = "3.03";
 $VERBOSE = 1;
 
 our (%CONF, @LOGFILES, $THIS_MONTH, $START, $LASTLINE);
@@ -507,7 +507,7 @@ sub show_progress($$$) {
 
 # _private::LogFile: The source log file
 package _private::LogFile;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 BEGIN {
@@ -898,7 +898,7 @@ sub check_magic : method {
 
 # _private::LogFile::STDIN: The source log file as STDIN
 package _private::LogFile::STDIN;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use base qw(_private::LogFile);
@@ -982,7 +982,7 @@ sub remove_temp : method {
 
 # _private::Archive: The result archived log file
 package _private::Archive;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 BEGIN {
@@ -1202,7 +1202,7 @@ sub store_archive : method {
 
 # _private::IO: The abstract I/O handler interface
 package _private::IO;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 BEGIN {
@@ -1339,7 +1339,7 @@ sub prepend_records : method {
 
 # _private::IO::Plain: The plain I/O handler
 package _private::IO::Plain;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use base qw(_private::IO);
@@ -1499,7 +1499,7 @@ sub prepend_records : method {
 
 # _private::IO::Gzip::PM: The gzip module compression I/O handler
 package _private::IO::Gzip::PM;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use base qw(_private::IO);
@@ -1688,7 +1688,7 @@ sub close : method {
 
 # _private::IO::Gzip::Exec: The gzip executable compression I/O handler
 package _private::IO::Gzip::Exec;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use base qw(_private::IO);
@@ -1956,7 +1956,7 @@ sub close : method {
 
 # _private::IO::Bzip2::PM: The bzip2 module compression I/O handler
 package _private::IO::Bzip2::PM;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use base qw(_private::IO);
@@ -2147,7 +2147,7 @@ sub close : method {
 
 # _private::IO::Bzip2::Exec: The bzip2 executable compression I/O handler
 package _private::IO::Bzip2::Exec;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use base qw(_private::IO);
@@ -2415,7 +2415,7 @@ sub close : method {
 
 # _private::Format: The abstract log file format handler interface
 package _private::Format;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 BEGIN {
@@ -2464,7 +2464,7 @@ sub parse_month : method {
 
 # _private::Format::Apache: The Apache log file format handler
 package _private::Format::Apache;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use base qw(_private::Format);
@@ -2479,7 +2479,7 @@ sub match : method {
 
 # _private::Format::Syslog: The Syslog log file format handler
 package _private::Format::Syslog;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use base qw(_private::Format);
@@ -2494,7 +2494,7 @@ sub match : method {
 
 # _private::Format::NTP: The NTP log file format handler
 package _private::Format::NTP;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use base qw(_private::Format);
@@ -2509,7 +2509,7 @@ sub match : method {
 
 # _private::Format::ApacheSSL: The Apache ssl_engine_log log file format handler
 package _private::Format::ApacheSSL;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use base qw(_private::Format);
@@ -2526,7 +2526,7 @@ sub match : method {
 #   ISO 8601 should be 2007-11-14T14:23:35+0800.  But it is hard to read.
 #   This is a similar format commonly-seen in many applications.
 package _private::Format::ModfISO;
-use 5.8.0;
+use 5.008;
 use strict;
 use warnings;
 use base qw(_private::Format);
@@ -2598,15 +2598,15 @@ records are in a correct order of the happening events, but I cannot
 guarantee.  You have to watch out if the order in a second is
 important.
 
-Be careful on the L<Syslog(2)|syslog/2> log files:
-L<Syslog(2)|syslog/2> does not record the year.  F<arclog> uses
-L<Date::Parse(3)|Date::Parse/3> to parse the date, which assumes the
-year between this month and last next month if the year is missing.
-For ex., if today is 2001-06-08, it will then assume the year between
-2001-06-30 back to 2000-07-01 if the year is missing.  I think this
-is smart enough.  However, if you do have a L<Syslog(2)|syslog/2> log
-file that has records older than one year, do not use F<arclog>.  It
-will destroy your log file.
+Be careful on the L<Syslog(2)|syslog/2> and NTP log files:
+L<Syslog(2)|syslog/2> and NTP does not record the year.  F<arclog>
+uses L<Date::Parse(3)|Date::Parse/3> to parse the date, which assumes
+the year between this month and last next month if the year is
+missing.  For ex., if today is 2001-06-08, it will then assume the
+year between 2001-06-30 back to 2000-07-01 if the year is missing.  I
+think this is smart enough.  However, if you do have a
+L<Syslog(2)|syslog/2> or NTP log file that has records older than one
+year, do not use F<arclog>.  It will destroy your log file.
 
 If read from C<STDIN>, please note:
 

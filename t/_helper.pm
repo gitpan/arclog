@@ -62,7 +62,6 @@ sub randip();
 sub randdomain();
 
 use Data::Dumper;
-use Date::Format qw(time2str);
 use ExtUtils::MakeMaker qw();
 use Fcntl qw(:seek);
 use File::Basename qw(basename);
@@ -74,6 +73,7 @@ use Time::Local qw(timelocal);
 $Data::Dumper::Indent = 1;
 
 use vars qw(%WHEREIS $NOFILE $NOGZIP $NOBZIP2);
+%WHEREIS = qw();
 undef $NOFILE;
 undef $NOGZIP;
 undef $NOBZIP2;
@@ -95,7 +95,7 @@ use vars qw(@LOGFMTS @SRCTYPES @RESTYPES @KEEPTYPES @OVERTYPES);
                 {   "title" => "modified ISO 8601 date/time",
                     "sub"   => \&mkrndlog_modfiso, }, );
 # All the source type information
-@SRCTYPES = (   {  "title" => "plain text source",
+@SRCTYPES = (   {   "title" => "plain text source",
                     "type"  => TYPE_PLAIN,
                     "suf"   => "",
                     "skip"  => 0, },
@@ -134,43 +134,37 @@ use vars qw(@LOGFMTS @SRCTYPES @RESTYPES @KEEPTYPES @OVERTYPES);
                     "tm"    => 1,
                     "del"   => 0,
                     "tmp"   => 1,
-                    "stdin" => 0,
-                    "ce"    => sub { $_[1]; }, },
+                    "stdin" => 0, },
                 {   "title" => "keep all",
                     "opts"  => [qw(-k a)],
                     "tm"    => 0,
                     "del"   => 0,
                     "tmp"   => 0,
-                    "stdin" => 0,
-                    "ce"    => sub { $_[0]; }, },
+                    "stdin" => 0, },
                 {   "title" => "keep delete",
                     "opts"  => [qw(-k d)],
                     "tm"    => 0,
                     "del"   => 1,
                     "tmp"   => 1,
-                    "stdin" => 0,
-                    "ce"    => sub { ""; }, },
+                    "stdin" => 0, },
                 {   "title" => "keep restart",
                     "opts"  => [qw(-k r)],
                     "tm"    => 0,
                     "del"   => 0,
                     "tmp"   => 1,
-                    "stdin" => 0,
-                    "ce"    => sub { ""; }, },
+                    "stdin" => 0, },
                 {   "title" => "keep this month",
                     "opts"  => [qw(-k t)],
                     "tm"    => 1,
                     "del"   => 0,
                     "tmp"   => 1,
-                    "stdin" => 0,
-                    "ce"    => sub { $_[1]; }, },
+                    "stdin" => 0, },
                 {   "title" => "keep STDIN",
                     "opts"  => [],
                     "tm"    => 0,
                     "del"   => 0,
                     "tmp"   => 0,
-                    "stdin" => 1,
-                    "ce"    => sub { $_[0]; }, }, );
+                    "stdin" => 1, }, );
 # All the override type information
 @OVERTYPES = (  {   "title" => "override no existing",
                     "opts"  => [],
@@ -523,6 +517,33 @@ sub cleanup($$$) {
     return;
 }
 
+# nofile: If we have the file type checker somewhere
+sub nofile() {
+    $NOFILE = eval { require File::MMagic; 1; }
+                || defined whereis "file"?
+            0: "File::MMagic or file executable not available"
+        if !defined $NOFILE;
+    return $NOFILE;
+}
+
+# nogzip: If we have gzip support somewhere
+sub nogzip() {
+    $NOGZIP = eval { require Compress::Zlib; 1; }
+                || defined whereis "gzip"?
+            0: "Compress::Zlib or gzip executable not available"
+        if !defined $NOGZIP;
+    return $NOGZIP;
+}
+
+# nobzip2: If we have bzip2 support somewhere
+sub nobzip2() {
+    $NOBZIP2 = eval { require Compress::Bzip2; import Compress::Bzip2 2.00; 1; }
+                || defined whereis "bzip2"?
+            0: "Compress::Bzip2 v2 or bzip2 executable not available"
+        if !defined $NOBZIP2;
+    return $NOBZIP2;
+}
+
 # mkrndlog_existing: Create a random existing log file
 sub mkrndlog_existing($$$@) {
     local ($_, %_);
@@ -559,8 +580,10 @@ sub mkrndlog_apache($;$) {
     @logs = qw();
     
     # Time zone
-    $tz = -12 + (int rand 53) / 2;
-    $tz = sprintf "%+05d", int($tz) * 100 + ($tz - int($tz)) * 60;
+    $tz = (-12 + (int rand 53) / 2) * 3600;
+    # To be removed
+    #$tz = -12 + (int rand 53) / 2;
+    #$tz = sprintf "%+05d", int($tz) * 100 + ($tz - int($tz)) * 60;
     
     # Get the range of a month
     if (defined $month) {
@@ -587,7 +610,12 @@ sub mkrndlog_apache($;$) {
             while (@hlogs < $hlogs) {
                 my ($ttxt, $method, $url, $dirs, @dirs, $type, $status, $size);
                 # Time text
-                $ttxt = time2str("%d/%h/%Y:%T %Z", $t, $tz);
+                @_ = gmtime($t + $tz);
+                $_[5] += 1900;
+                $_[4] = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec))[$_[4]];
+                $ttxt = sprintf "%02d/%s/%04d:%02d:%02d:%02d %+05d",
+                    @_[3,4,5,2,1,0],
+                    int($tz / 3600) * 100 + ($tz - int($tz / 3600) * 3600) / 60;
                 
                 $method = (qw(GET GET GET HEAD POST))[int rand 5];
                 
@@ -681,7 +709,10 @@ sub mkrndlog_syslog($;$) {
         foreach my $t (sort @t) {
             my ($ttxt, $host, $app, $pid, $msg);
             # Time text
-            $ttxt = time2str("%h %d %T", $t);
+            @_ = localtime $t;
+            $_[5] += 1900;
+            $_[4] = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec))[$_[4]];
+            $ttxt = sprintf "%s %2d %02d:%02d:%02d", @_[4,3,2,1,0];
             $host = $hosts[int rand scalar @hosts];
             $app = (qw(kernel sendmail sshd su CRON), randword, randword)[int rand 5];
             # PID 2-65535 (PID 1 is init)
@@ -757,7 +788,10 @@ sub mkrndlog_ntp($;$) {
         foreach my $t (sort @t) {
             my ($ttxt, $type, $msg);
             # Time text
-            $ttxt = time2str("%e %h %T", $t);
+            @_ = localtime $t;
+            $_[5] += 1900;
+            $_[4] = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec))[$_[4]];
+            $ttxt = sprintf "%2d %s %02d:%02d:%02d", @_[3,4,2,1,0];
             # PID change - chance 2.73%, 50% change to total 25 records
             $pid = 2 + int rand 65533
                 if rand() < 0.0273;
@@ -851,7 +885,10 @@ sub mkrndlog_apachessl($;$) {
         foreach my $t (sort @t) {
             my ($ttxt, $pid, $remote, $priority, $child, $msg);
             # Time text
-            $ttxt = time2str("%d/%h/%Y %T", $t);
+            @_ = localtime $t;
+            $_[5] += 1900;
+            $_[4] = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec))[$_[4]];
+            $ttxt = sprintf "%02d/%s/%04d %02d:%02d:%02d", @_[3,4,5,2,1,0];
             # PID 2-65535 (PID 1 is init)
             $pid = 2 + int rand 65533;
             # Remote client
@@ -954,8 +991,10 @@ sub mkrndlog_modfiso($;$) {
     @logs = qw();
     
     # Time zone
-    $tz = -12 + (int rand 53) / 2;
-    $tz = sprintf "%+05d", int($tz) * 100 + ($tz - int($tz)) * 60;
+    $tz = (-12 + (int rand 53) / 2) * 3600;
+    # To be removed
+    #$tz = -12 + (int rand 53) / 2;
+    #$tz = sprintf "%+05d", int($tz) * 100 + ($tz - int($tz)) * 60;
     
     # Get the range of a month
     if (defined $month) {
@@ -976,7 +1015,12 @@ sub mkrndlog_modfiso($;$) {
         foreach my $t (sort @t) {
             my ($ttxt, $id, $msg);
             # Time text
-            $ttxt = time2str("%Y-%m-%d %T %Z", $t, $tz);
+            @_ = gmtime($t + $tz);
+            $_[5] += 1900;
+            $_[4]++;
+            $ttxt = sprintf "%04d-%02d-%02d %02d:%02d:%02d %+05d",
+                @_[5,4,3,2,1,0], 
+                int($tz / 3600) * 100 + ($tz - int($tz / 3600) * 3600) / 60;
             # identity
             $id = randword;
             # 3-12 words for each message
@@ -1127,33 +1171,6 @@ sub randdomain() {
     push @_, randword while @_ < $_;
     push @_, (qw(net com))[int rand 2];
     return join ".", @_;
-}
-
-# nofile: If we have the file type checker somewhere
-sub nofile() {
-    $NOFILE = eval { require File::MMagic; 1; }
-                || defined whereis "file"?
-            0: "File::MMagic or file executable not available"
-        if !defined $NOFILE;
-    return $NOFILE;
-}
-
-# nogzip: If we have gzip support somewhere
-sub nogzip() {
-    $NOGZIP = eval { require Compress::Zlib; 1; }
-                || defined whereis "gzip"?
-            0: "Compress::Zlib or gzip executable not available"
-        if !defined $NOGZIP;
-    return $NOGZIP;
-}
-
-# nobzip2: If we have bzip2 support somewhere
-sub nobzip2() {
-    $NOBZIP2 = eval { require Compress::Bzip2; import Compress::Bzip2 2.00; 1; }
-                || defined whereis "bzip2"?
-            0: "Compress::Bzip2 v2 or bzip2 executable not available"
-        if !defined $NOBZIP2;
-    return $NOBZIP2;
 }
 
 1;

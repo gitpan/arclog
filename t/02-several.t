@@ -73,23 +73,25 @@ foreach my $rt (@RESTYPES) {
         foreach (grep !exists $_{$_}, (0...$num-1)) {
             do {
                 $_{$_} = $SRCTYPES[int rand @SRCTYPES];
-            } while (${$_{$_}}{"type"} eq TYPE_GZIP && nogzip)
-                    || (${$_{$_}}{"type"} eq TYPE_BZIP2 && nobzip2);
+            } until !(${$_{$_}}{"type"} eq TYPE_GZIP && nogzip)
+                    && !(${$_{$_}}{"type"} eq TYPE_BZIP2 && nobzip2);
         }
         @st = map $_{$_}, (0...$num-1);
         @fs = qw();
+        @cs = qw();
+        @cem = qw();
         @vardump = qw();
         @fle = qw();
         %logfiles = qw();
         for (my $k = 0; $k < $num; $k++) {
             my ($logfile, $cs, $vardump);
-            do { $logfile = randword } while exists $logfiles{$logfile};
+            do { $logfile = randword } until !exists $logfiles{$logfile};
             $logfiles{$logfile} = 1;
             $logfile .= ${$st[$k]}{"suf"};
             push @fs, catfile($WORKDIR, $logfile);
             ($cs, $vardump, %_) = &{$$fmt{"sub"}}($fs[$k]);
-            push @cem, {%_};
             push @cs, $cs;
+            push @cem, {%_};
             push @fle, $logfile;
             push @vardump, $vardump;
             frwrite(catfile($WORKDIR, "$logfile.vardump"), $vardump);
@@ -99,7 +101,7 @@ foreach my $rt (@RESTYPES) {
         %_ = (%_, map { $_ => 1 } keys %$_) foreach @cem;
         @mle = sort keys %_;
         $mt = pop @mle;
-        do { $oprfb = randword } while exists $logfiles{$oprfb};
+        do { $oprfb = randword } until !exists $logfiles{$oprfb};
         $opref = catfile($WORKDIR, $oprfb);
         %cof = mkrndlog_existing $$fmt{"sub"},
             $WORKDIR, "$oprfb.%s" . $$rt{"suf"}, @mle;
@@ -183,26 +185,28 @@ foreach my $rt (@RESTYPES) {
             foreach (grep !exists $_{$_}, (0...$num-1)) {
                 do {
                     $_{$_} = $SRCTYPES[int rand @SRCTYPES];
-                } while (${$_{$_}}{"type"} eq TYPE_GZIP && nogzip)
-                        || (${$_{$_}}{"type"} eq TYPE_BZIP2 && nobzip2);
+                } until !(${$_{$_}}{"type"} eq TYPE_GZIP && nogzip)
+                        && !(${$_{$_}}{"type"} eq TYPE_BZIP2 && nobzip2);
             }
             # Choose the STDIN from the matching compression
             @_ = grep ${$_{$_}}{"type"} eq $$ststdin{"type"}, (0...$num-1);
             $stdin = $_[int rand @_];
             @st = map $_{$_}, (0...$num-1);
             @fs = qw();
+            @cs = qw();
+            @cem = qw();
             @vardump = qw();
             @fle = qw();
             %logfiles = qw();
             for (my $k = 0; $k < $num; $k++) {
                 my ($logfile, $cs, $vardump);
-                do { $logfile = randword } while exists $logfiles{$logfile};
+                do { $logfile = randword } until !exists $logfiles{$logfile};
                 $logfiles{$logfile} = 1;
                 $logfile .= ${$st[$k]}{"suf"};
                 push @fs, catfile($WORKDIR, $logfile);
                 ($cs, $vardump, %_) = &{$$fmt{"sub"}}($fs[$k]);
-                push @cem, {%_};
                 push @cs, $cs;
+                push @cem, {%_};
                 push @fle, $logfile;
                 push @vardump, $vardump;
                 frwrite(catfile($WORKDIR, "$logfile.vardump"), $vardump);
@@ -211,7 +215,7 @@ foreach my $rt (@RESTYPES) {
             %_ = qw();
             %_ = (%_, map { $_ => 1 } keys %$_) foreach @cem;
             @mle = sort keys %_;
-            do { $oprfb = randword } while exists $logfiles{$oprfb};
+            do { $oprfb = randword } until !exists $logfiles{$oprfb};
             $opref = catfile($WORKDIR, $oprfb);
             %cof = mkrndlog_existing $$fmt{"sub"},
                 $WORKDIR, "$oprfb.%s" . $$rt{"suf"}, @mle;
@@ -221,7 +225,7 @@ foreach my $rt (@RESTYPES) {
             $_[$stdin] = "-";
             @_ = ($arclog, qw(-d -d -d -k a -o a), @{$$rt{"opts"}}, @_, $opref);
             $cmd = join(" ", @_) . " < " . $fs[$stdin];
-            ($retno, $out, $err) = runcmd $cs[$stdin], @_;
+            ($retno, $out, $err) = runcmd frread $fs[$stdin], @_;
             ($fle, $flr) = (join(" ", sort @fle), flist $WORKDIR);
             %cef = qw();    # Expected content by file
             %tef = qw();    # Expected file type by file

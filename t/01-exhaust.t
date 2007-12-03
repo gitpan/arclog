@@ -66,7 +66,7 @@ foreach my $fmt (@LOGFMTS) {
                             %cof = mkrndlog_existing $$fmt{"sub"},
                                 $WORKDIR, "$logfile.%s"  . $$rt{"suf"}, @mle;
                         } else {
-                            %cof = map { "$logfile.$_"  . $$rt{"suf"} => 1 }
+                            %cof = map { "$logfile.$_"  . $$rt{"suf"} => "" }
                                 @mle;
                         }
                         @fle = qw();
@@ -89,7 +89,7 @@ foreach my $fmt (@LOGFMTS) {
                                 @{$$ot{"opts"}}, @{$$rt{"opts"}}, "-",
                                 catfile($WORKDIR, $logfile));
                             $cmd = join(" ", @_) . " < " . $fs;
-                            ($retno, $out, $err) = runcmd $cs, @_;
+                            ($retno, $out, $err) = runcmd frread $fs, @_;
                         }
                         ($fle, $flr) = (join(" ", sort @fle), flist $WORKDIR);
                         %cef = qw();    # Expected content by file

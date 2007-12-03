@@ -25,7 +25,7 @@ h2, em {
     width: 0.5em;
 }
 </style>
-<title>arclog Version 3.02</title>
+<title>arclog Version 3.03</title>
 </head>
 <body>
 
@@ -45,24 +45,31 @@ h2, em {
 <div class="accessguide"><a accesskey="C"
     href="#body" title="Page Content Area">:::</a></div>
 
-<h1><samp>arclog</samp> Version 3.02</h1>
+<h1><samp>arclog</samp> Version 3.03</h1>
 
 
 <h2>What&rsquo;s New?</h2>
 
 <dl>
 
+<dt>2007-12-03</dt>
+
+<dd>
+<p><samp>arclog</samp> version 3.03 is released.  Test suite fixes.  Required <acronym title="Practical Extraction and Reporting Language">Perl</acronym> version number compatible to older versions, to work with the <acronym title="Practical Extraction and Reporting Language">Perl</acronym> 5.10 warning.  Upgrade is not necessary if you have installed <samp>arclog</samp> version 3.00 or later.  <a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.03.tar.gz" type="application/x-gzip">Download <samp>arclog</samp> version 3.03</a>.</p>
+</dd>
+
+
 <dt>2007-11-30</dt>
 
 <dd>
-<p><samp>arclog</samp> version 3.02 is released.  Test suite improvement, in order to deal with daylight saving time.  <a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.02.tar.gz" type="application/x-gzip">Download <samp>arclog</samp> version 3.02</a>.</p>
+<p><samp>arclog</samp> version 3.02 is released.  Test suite improvement, in order to deal with daylight saving time.  Upgrade is not necessary if you have installed <samp>arclog</samp> version 3.00 or later.  <a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.02.tar.gz" type="application/x-gzip">Download <samp>arclog</samp> version 3.02</a>.</p>
 </dd>
 
 
 <dt>2007-11-28</dt>
 
 <dd>
-<p><samp>arclog</samp> version 3.01 is released.  Test suite improvement, in order to catch <abbr title="Comprehensive Perl Archive Network">CPAN</abbr> tester failures.  <a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.01.tar.gz" type="application/x-gzip">Download <samp>arclog</samp> version 3.01</a>.</p>
+<p><samp>arclog</samp> version 3.01 is released.  Test suite improvement, in order to catch <abbr title="Comprehensive Perl Archive Network">CPAN</abbr> tester failures.  Upgrade is not necessary if you have installed <samp>arclog</samp> version 3.00.  <a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.01.tar.gz" type="application/x-gzip">Download <samp>arclog</samp> version 3.01</a>.</p>
 </dd>
 
 
@@ -121,7 +128,7 @@ h2, em {
     </ol>
 </li>
 
-<li><p>Be careful on the Syslog log files:  Syslog does not record the year.  <samp>arclog</samp> uses <a href="http://search.cpan.org/dist/TimeDate/"><samp>Date::Parse</samp></a> to parse the date, which assums the year between this month and last next month if the year is missing.  For <abbr title="example">ex.</abbr>, if today is 2001-06-08, it will then assume the year between 2001-06-30 back to 2000-07-01.  I think this is smart enough.  However, if you do have a Syslog log file that has records older than one year, do not use <samp>arclog</samp>.  It will destroy your log file.</p></li>
+<li><p>Be careful on the Syslog and <abbr title="network time protocol">NTP</abbr> log files:  Syslog and <abbr title="network time protocol">NTP</abbr> does not record the year.  <samp>arclog</samp> uses <a href="http://search.cpan.org/dist/TimeDate/"><samp>Date::Parse</samp></a> to parse the date, which assums the year between this month and last next month if the year is missing.  For <abbr title="example">ex.</abbr>, if today is 2001-06-08, it will then assume the year between 2001-06-30 back to 2000-07-01.  I think this is smart enough.  However, if you do have a Syslog or <abbr title="network time protocol">NTP</abbr> log file that has records older than one year, do not use <samp>arclog</samp>.  It will destroy your log file.</p></li>
 
 <li><p>If read from <samp>STDIN</samp>, please note:</p>
     <ol>
@@ -491,7 +498,7 @@ h2, em {
 
 <hr />
 <div id="footer" class="footer" title="Page Footer Area">
-<address>By <a href="mailto:imacat&#64;mail.imacat.idv.tw">imacat</a>, first version 2001-06-08, last updated 2007-11-30</address>
+<address>By <a href="mailto:imacat&#64;mail.imacat.idv.tw">imacat</a>, first version 2001-06-08, last updated 2007-12-03</address>
 
 <address>Copyright &copy; 2001-2007 imacat.  Please read the <a href="fdl.txt">copyright</a> before copying.</address>
 </div>

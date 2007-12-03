@@ -31,7 +31,7 @@ q:lang(en) {
     quotes: "\201C" "\201D" "\2018" "\2019";
 }
 </style>
-<title>arclog 3.02 版</title>
+<title>arclog 3.03 版</title>
 </head>
 <body>
 
@@ -51,24 +51,31 @@ q:lang(en) {
 <div class="accessguide"><a accesskey="C"
     href="#body" title="網頁內文區">:::</a></div>
 
-<h1><samp xml:lang="en">arclog</samp> 3.02 版</h1>
+<h1><samp xml:lang="en">arclog</samp> 3.03 版</h1>
 
 
 <h2>最新消息</h2>
 
 <dl>
 
+<dt>2007-12-03</dt>
+
+<dd>
+<p><samp xml:lang="en">arclog</samp> 最新版本 3.03 。修正測試套件。所需 <acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 版本號碼改用相容於舊版的號碼格式，以消除 <acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 5.10 的警告訊息。若妳之前安裝了 <samp xml:lang="en">arclog</samp> 3.00 版或之後的版本，不需要安裝新版。<a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.03.tar.gz" type="application/x-gzip">下載 <samp xml:lang="en">arclog</samp> 3.03 版</a>。</p>
+</dd>
+
+
 <dt>2007-11-30</dt>
 
 <dd>
-<p><samp xml:lang="en">arclog</samp> 最新版本 3.02 。修正測試套件，以處理日光節約時間問題。<a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.02.tar.gz" type="application/x-gzip">下載 <samp xml:lang="en">arclog</samp> 3.02 版</a>。</p>
+<p><samp xml:lang="en">arclog</samp> 最新版本 3.02 。修正測試套件，以處理日光節約時間問題。若妳之前安裝了 <samp xml:lang="en">arclog</samp> 3.00 版或之後的版本，不需要安裝新版。<a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.02.tar.gz" type="application/x-gzip">下載 <samp xml:lang="en">arclog</samp> 3.02 版</a>。</p>
 </dd>
 
 
 <dt>2007-11-28</dt>
 
 <dd>
-<p><samp xml:lang="en">arclog</samp> 最新版本 3.01 。修正測試套件，以協助釐清 <abbr title="Comprehensive Perl Archive Network">CPAN</abbr> 測試回報的錯誤。<a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.01.tar.gz" type="application/x-gzip">下載 <samp xml:lang="en">arclog</samp> 3.01 版</a>。</p>
+<p><samp xml:lang="en">arclog</samp> 最新版本 3.01 。修正測試套件，以協助釐清 <abbr title="Comprehensive Perl Archive Network">CPAN</abbr> 測試回報的錯誤。若妳之前安裝了 <samp xml:lang="en">arclog</samp> 3.00 版，不需要安裝新版。<a href="ftp://ftp.imacat.idv.tw/pub/arclog/arclog-3.01.tar.gz" type="application/x-gzip">下載 <samp xml:lang="en">arclog</samp> 3.01 版</a>。</p>
 </dd>
 
 
@@ -128,7 +135,7 @@ q:lang(en) {
     </ol>
 </li>
 
-<li><p>歸檔 <span xml:lang="en">Syslog</span> 記錄檔時，請特別注意： <em><span xml:lang="en">Syslog</span> 記錄檔沒有記年。</em> <samp xml:lang="en">arclog</samp> 用 <a href="http://search.cpan.org/dist/TimeDate/" hreflang="en" xml:lang="en"><samp>Date::Parse</samp></a> 模組解讀時間。無年份時， <a href="http://search.cpan.org/dist/TimeDate/" hreflang="en" xml:lang="en"><samp>Date::Parse</samp></a> 會把年份設在<q>這個月</q>到<q>去年的下個月</q>之間。例如，若今天是 2001-06-08 ，那年份會設在 2001-06-30 到 2000-07-01 之間。我原則上贊成這樣。不過，若妳的 <span xml:lang="en">Syslog</span> 記錄檔超過一年整理歸檔，不要跑 <samp xml:lang="en">arclog</samp> ，否則會死得很慘。</p></li>
+<li><p>歸檔 <span xml:lang="en">Syslog</span> 和 <abbr title="network time protocol" xml:lang="en">NTP</abbr> 記錄檔時，請特別注意： <em><span xml:lang="en">Syslog</span> 和 <abbr title="network time protocol" xml:lang="en">NTP</abbr> 記錄檔沒有記年。</em> <samp xml:lang="en">arclog</samp> 用 <a href="http://search.cpan.org/dist/TimeDate/" hreflang="en" xml:lang="en"><samp>Date::Parse</samp></a> 模組解讀時間。無年份時， <a href="http://search.cpan.org/dist/TimeDate/" hreflang="en" xml:lang="en"><samp>Date::Parse</samp></a> 會把年份設在<q>這個月</q>到<q>去年的下個月</q>之間。例如，若今天是 2001-06-08 ，那年份會設在 2001-06-30 到 2000-07-01 之間。我原則上贊成這樣。不過，若妳的 <span xml:lang="en">Syslog</span> 或 <abbr title="network time protocol" xml:lang="en">NTP</abbr> 記錄檔超過一年整理歸檔，不要跑 <samp xml:lang="en">arclog</samp> ，否則記錄檔會大亂。</p></li>
 
 <li><p>從標準輸入讀記錄檔，請注意下列事項：</p>
     <ol>
@@ -146,8 +153,7 @@ q:lang(en) {
 <h2>系統需求</h2>
 
 <ol>
-
-<li><p><acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 5.8.0 以上。 <samp xml:lang="en">arclog</samp> 使用三參數的 <samp xml:lang="en">open()</samp> 以複製檔案操作，我還不知道怎麼改寫到更早的版本上執行。若妳可以改寫到更早的版本上執行，請告訴我。妳可以輸入 <q xml:lang="en"><samp>perl -v</samp></q> 查詢妳目前的 <acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 版本。如果妳沒有 <acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 或需要昇級，可以到 <a href="http://www.perl.com/" hreflang="en"><acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 網站</a>下載安裝最新版 <acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 。若妳是用 <span xml:lang="en"><abbr title="Microsoft">MS</abbr>-Windows</span> ，可以到 <a href="http://www.activestate.com/" hreflang="en"><span xml:lang="en">ActiveState</span> 公司</a>下載 <span xml:lang="en">ActivePerl</span> 安裝。</p></li>
+<li><p><acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 5.8.0 以上。 <samp xml:lang="en">arclog</samp> 用三個參數的 <samp xml:lang="en">open()</samp> 來複製檔案操作，我還不知道怎麼改寫到更早的版本上執行。若妳可以改寫到更早的版本上執行，請告訴我。妳可以輸入 <q xml:lang="en"><samp>perl -v</samp></q> 查詢妳目前的 <acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 版本。如果妳沒有 <acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 或需要昇級，可以到 <a href="http://www.perl.com/" hreflang="en"><acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 網站</a>下載安裝最新版 <acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 。若妳是用 <span xml:lang="en"><abbr title="Microsoft">MS</abbr>-Windows</span> ，可以到 <a href="http://www.activestate.com/" hreflang="en"><span xml:lang="en">ActiveState</span> 公司</a>下載 <span xml:lang="en">ActivePerl</span> 安裝。</p></li>
 
 <li><p>需搭配的 <acronym title="Practical Extraction and Reporting Language" xml:lang="en">Perl</acronym> 模組：</p>
     
@@ -499,7 +505,7 @@ q:lang(en) {
 
 <hr />
 <div id="footer" class="footer" title="頁尾區">
-<address><a href="mailto:imacat&#64;mail.imacat.idv.tw">依瑪貓</a>，初稿 2001-06-08 ，上次更新日期 2007-11-30</address>
+<address><a href="mailto:imacat&#64;mail.imacat.idv.tw">依瑪貓</a>，初稿 2001-06-08 ，上次更新日期 2007-12-03</address>
 
 <address>版權所有 &copy; 2001-2007 依瑪貓，欲轉載引用請先閱讀<a href="fdl.txt">版權聲明</a>。</address>
 </div>

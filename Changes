@@ -1,12 +1,54 @@
 arclog change log
 
+2007-12-03	version 3.03
+	 1. t/*.t: Fixed so that send frread($fs) instead of $cs
+	    is sent to arclog STDIN when reading from STDIN, so that
+	    compresed content is sent to arclog but not the original
+	    content.
+	 2. arclog.zh-tw.html, arclog.zh-cn.html: Revised the Chinese
+	    text on "3-argument open()" so that it is more readable.
+	 3. t/_helper.pm: Updated the way we generate the time with
+	    time zones in the mkrndlog_apache() and
+	    mkrndlog_modfiso() subroutines, using "gmtime($t + $tz)",
+	    so that we can obtain a reliable time text with time zone
+	    without using time2str() from Date::Format
+	 4. t/04-errors.t: Added a test on "a same log file is
+	    specified more than once".
+
+2007-12-02
+	 1. t/02-several.t, t/03-fallback.t, t/04-errors.t: Use
+	    "do { ... } until !... " instead of "do { ... } while ..."
+	    so that the code is more readable.
+	 2. t/02-several.t, t/03-fallback.t, t/04-errors.t: Initialize
+	    @cs and @cem before using them.
+
+2007-12-01
+	 1. arclog: Use "use 5.008" instead of "use 5.8.0", for
+	    compatibility with older Perl, and get ride of the warning
+	    of Perl 5.10.
+
+2007-11-30
+	 1. t/_helper.pm: Updated the version number to 0.02.
+	 2. arclog, arclog.*.html: Added NTP in addition to Syslog
+	    to the note with log file formats without years.
+	 3. arclog.zh-tw.html, arclog.zh-cn.html: Fixed the text
+	    on the note with log file formats without years.
+	 4. t/_helper.pm: Reorder the subroutines.
+	 5. t/_helper.pm: Reset the %WHEREIS hash in the beginning.
+	 6. t/01-exhaust.t: Fixed to set %cof to "" instead of 1
+	    when not creating existing files.
+	 7. t/_helper.pm: Removed unused "ce" from @KEEPTYPES.
+
 2007-11-30	version 3.02
-	 1. _helper: Use time2str() from Date::Format to generate
-	    the time text instead of doing this my self.  The way
-	    I generate the time text cannot deal with daylight
-	    saving time.  It should be safe to use Date::Format,
-	    since Date::Format is in the same TimeDate distribution
-	    as Date::Parse, at least till now.
+	 1. t/_helper.pm: Use time2str() from Date::Format to
+	    generate the time text instead of doing this my self.
+	    The way I generate the time text cannot deal with
+	    daylight saving time.  It should be safe to use
+	    Date::Format, since Date::Format is in the same TimeDate
+	    distribution as Date::Parse, at least till now.
+	 2. t/_helper.pm: Increased time zone range from -1200 to
+	    +1400 in the mkrandlog_apache() and mkrandlog_modfiso()
+	    subroutines.
 
 2007-11-29
 	 1. arclog.zh-tw.html, TODO.zh-tw, TODO.zh-cn: Changed
@@ -62,7 +104,7 @@ arclog change log
 	    the base name of the output prefix.
 	 3. t/_helper.t: Fixed the errors in the mkrndlog_apache() and
 	    mkrndlog_modfiso() subroutines that dump $tzoff as $zoff.
-	 4. t/_helper.t: Fixed the timezone representation that mistakenly
+	 4. t/_helper.t: Fixed the time zone representation that mistakenly
 	    output -0030 as +0030 in the mkrndlog_apache() and
 	    mkrndlog_modfiso() subroutines.  This test suite bug is hard to
 	    track, since it only appears with log formats with time zones,
